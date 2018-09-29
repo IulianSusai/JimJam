@@ -7,9 +7,11 @@ public class InGamePage : MenuPage {
 
 	public override void OnShow() {
 		ActionsController.Instance.onEscPressed += OnAction;
+		ActionsController.Instance.SendOnStartGame();
 	}
 
 	public override void OnHide() {
+		ActionsController.Instance.SendOnEndGame();
 		ActionsController.Instance.onEscPressed -= OnAction;
 	}
 

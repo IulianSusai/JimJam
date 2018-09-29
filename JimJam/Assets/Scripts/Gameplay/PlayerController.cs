@@ -13,24 +13,52 @@ public class PlayerController : MonoBehaviour {
 		}
 	}
 
-	[SerializeField] private MainCharacter character; 
+	[SerializeField] private Vector3 startPosition;
+	[SerializeField] private MainCharacter character;
+
+	private bool gameStarted;
+
+	private bool canKill;
+	private bool didKill;
+
+	private void Start() {
+		ActionsController.Instance.onStartGame += StartGame;
+		ActionsController.Instance.onEndGame -= EndGame;
+	}
+
+	private void StartGame() {
+		gameStarted = true;
+		canKill = false;
+		didKill = false;
+		character.transform.position = startPosition;
+	}
+
+	private void EndGame() {
+		gameStarted = false;
+	}
 
 	private void Update() {
-		if (Input.GetKeyDown(KeyCode.W)) {
-			character.Jump();
-		}
-		if (Input.GetKeyDown(KeyCode.A)) {
-			character.MoveLeft();
-		} else if (Input.GetKeyDown(KeyCode.D)) {
-			character.MoveRight();
-		} else if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) {
-			character.StopMovement();
-		}
+		if (gameStarted) {
+			if (Input.GetKeyDown(KeyCode.W)) {
+				character.Jump();
+			}
+			if (Input.GetKeyDown(KeyCode.A)) {
+				character.MoveLeft();
+			} else if (Input.GetKeyDown(KeyCode.D)) {
+				character.MoveRight();
+			} else if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) {
+				character.StopMovement();
+			}
 
-		if(Input.GetKeyUp(KeyCode.A) && Input.GetKey(KeyCode.D)) {
-			character.MoveRight();
-		} else if(Input.GetKeyUp(KeyCode.D) && Input.GetKey(KeyCode.A)) {
-			character.MoveLeft();
+			if (Input.GetKeyUp(KeyCode.A) && Input.GetKey(KeyCode.D)) {
+				character.MoveRight();
+			} else if (Input.GetKeyUp(KeyCode.D) && Input.GetKey(KeyCode.A)) {
+				character.MoveLeft();
+			}
+
+			if (Input.GetKeyDown(KeyCode.E)) {
+				Interact();
+			}
 		}
 
 		if (Input.GetKeyDown(KeyCode.Escape)) {
@@ -40,7 +68,12 @@ public class PlayerController : MonoBehaviour {
 		} else if (Input.GetKeyDown(KeyCode.Space)) {
 			ActionsController.Instance.SendOnSpacePressed();
 		}
+	}
 
+	private void Interact() {
+		if (canKill && character.canInteract) {
+			didKill = true;
+		}
 	}
 
 }

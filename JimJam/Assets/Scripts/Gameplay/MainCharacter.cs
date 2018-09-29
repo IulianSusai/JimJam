@@ -13,7 +13,9 @@ public class MainCharacter : MonoBehaviour {
 
 	private float startJumpTime;
 	private bool isJumping;
+	public bool canInteract { private set; get; }
 	
+
 	public void MoveRight() {
 		rb.velocity = new Vector2(moveSpeed, rb.velocity.y);
 	} 
@@ -64,4 +66,19 @@ public class MainCharacter : MonoBehaviour {
 		}
 
 	}
+
+	private void OnTriggerEnter2D(Collider2D collision) {
+		if (collision.CompareTag("Lever")) {
+			collision.gameObject.GetComponent<Lever>().ShowInteractTip();
+			canInteract = true;
+		}
+	}
+
+	private void OnTriggerExit2D(Collider2D collision) {
+		if (collision.CompareTag("Lever")) {
+			collision.gameObject.GetComponent<Lever>().HideInteractTip();
+			canInteract = false;
+		}
+	}
+
 }

@@ -185,6 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 105bf2f50b964134b8f6b35287c527fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startPosition: {x: 0, y: 0, z: 0}
   character: {fileID: 114057563754174804}
 --- !u!114 &114057563754174804
 MonoBehaviour:
