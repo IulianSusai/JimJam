@@ -7,7 +7,9 @@ public class Lever : MonoBehaviour {
 	[SerializeField] private GameObject interactTip;
 
 	public void ShowInteractTip() {
-		interactTip.SetActive(true);
+		if (PlayerController.Instance.canKill) {
+			interactTip.SetActive(true);
+		}
 	}
 
 	public void HideInteractTip() {

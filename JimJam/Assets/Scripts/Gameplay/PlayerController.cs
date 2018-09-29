@@ -19,24 +19,30 @@ public class PlayerController : MonoBehaviour {
 
 	private bool gameStarted;
 
-	private bool canKill;
-	private bool didKill;
+	public bool canKill { private set; get; }
+	public bool didKill { private set; get; }
 
 	private void Start() {
 		ActionsController.Instance.onStartGame += StartGame;
 		ActionsController.Instance.onEndGame += EndGame;
 		ActionsController.Instance.onHitFinish += OnHitFinish;
+		ActionsController.Instance.onCanKill += OnCanKill;
 	}
 
 	private void StartGame() {
 		gameStarted = true;
-		canKill = true;
+		canKill = false;
 		didKill = false;
 		character.transform.position = startPosition;
 	}
 
 	private void EndGame() {
 		gameStarted = false;
+	}
+
+	private void OnCanKill(bool cK) {
+		canKill = cK;
+		Debug.Log(canKill);
 	}
 
 	private void Update() {
@@ -73,8 +79,9 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	private void Interact() {
-		if (canKill && character.canInteract) {
+		if (canKill && !didKill && character.canInteract ) {
 			didKill = true;
+			ActionsController.Instance.SendOnDidKill();
 		}
 	}
 

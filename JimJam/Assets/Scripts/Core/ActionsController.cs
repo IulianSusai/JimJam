@@ -22,6 +22,27 @@ public class ActionsController {
 	public Action onStartGame;
 	public Action onEndGame;
 	public Action onHitFinish;
+	public Action onResetGirl;
+	public Action onDidKill;
+	public Action<bool> onCanKill;
+
+	public void SendOnDidKill() {
+		if(onDidKill != null) {
+			onDidKill();
+		}
+	}
+
+	public void SendOnResetGirl() {
+		if(onResetGirl != null) {
+			onResetGirl();
+		}
+	}
+
+	public void SendOnCanKill(bool canKill) {
+		if(onCanKill != null) {
+			onCanKill(canKill);
+		}
+	}
 
 	public void SendOnEscPressed() {
 		if(onEscPressed != null) {
