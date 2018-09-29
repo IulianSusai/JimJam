@@ -16,4 +16,33 @@ public class ActionsController {
 	}
 	private ActionsController() { }
 
+	public Action onEnterPressed;
+	public Action onSpacePressed;
+	public Action onEscPressed;
+	public Action onStartGame;
+
+	public void SendOnEscPressed() {
+		if(onEscPressed != null) {
+			onEscPressed();
+		}
+	}
+
+	public void SendOnSpacePressed() {
+		if(onSpacePressed != null) {
+			onSpacePressed();
+		}
+	}
+
+	public void SendOnEnterPressed() {
+		if(onEnterPressed != null) {
+			onEnterPressed();
+		}
+	}
+
+	public void SendOnStartGame() {
+		if(onStartGame != null) {
+			onStartGame();
+		}
+	}
+
 }

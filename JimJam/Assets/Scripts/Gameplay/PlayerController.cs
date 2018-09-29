@@ -33,6 +33,14 @@ public class PlayerController : MonoBehaviour {
 			character.MoveLeft();
 		}
 
+		if (Input.GetKeyDown(KeyCode.Escape)) {
+			ActionsController.Instance.SendOnEscPressed();
+		} else if (Input.GetKeyDown(KeyCode.Return)) {
+			ActionsController.Instance.SendOnEnterPressed();
+		} else if (Input.GetKeyDown(KeyCode.Space)) {
+			ActionsController.Instance.SendOnSpacePressed();
+		}
+
 	}
 
 }

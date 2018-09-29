@@ -13,4 +13,8 @@ public class GameManager : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
+
+	public void Start() {
+		UIManager.Instance.ChangePage(MenuPages.MainPage);
+	}
 }
