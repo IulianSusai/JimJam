@@ -31,6 +31,7 @@ public class Moon : MonoBehaviour {
 
 	private void OnEndGame() {
 		CancelInvoke();
+		isLerping = false;
 	}
 
 	private void StartOnEclipse() {
