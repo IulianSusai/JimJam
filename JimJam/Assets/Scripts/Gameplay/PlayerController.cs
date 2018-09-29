@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour {
 	}
 
 	[SerializeField] private Vector3 startPosition;
+	[SerializeField] private Vector3 resetPosition;
 	[SerializeField] private MainCharacter character;
 
 	private bool gameStarted;
@@ -23,12 +24,13 @@ public class PlayerController : MonoBehaviour {
 
 	private void Start() {
 		ActionsController.Instance.onStartGame += StartGame;
-		ActionsController.Instance.onEndGame -= EndGame;
+		ActionsController.Instance.onEndGame += EndGame;
+		ActionsController.Instance.onHitFinish += OnHitFinish;
 	}
 
 	private void StartGame() {
 		gameStarted = true;
-		canKill = false;
+		canKill = true;
 		didKill = false;
 		character.transform.position = startPosition;
 	}
@@ -74,6 +76,19 @@ public class PlayerController : MonoBehaviour {
 		if (canKill && character.canInteract) {
 			didKill = true;
 		}
+	}
+
+	private void OnHitFinish() {
+		if (didKill) {
+			character.StopMovement();
+			UIManager.Instance.ChangePage(MenuPages.EndStoryPage);
+		} else {
+			ResetPlayer();
+		}
+	}
+
+	private void ResetPlayer() {
+		character.transform.position = resetPosition;
 	}
 
 }

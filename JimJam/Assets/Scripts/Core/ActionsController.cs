@@ -21,6 +21,7 @@ public class ActionsController {
 	public Action onEscPressed;
 	public Action onStartGame;
 	public Action onEndGame;
+	public Action onHitFinish;
 
 	public void SendOnEscPressed() {
 		if(onEscPressed != null) {
@@ -49,6 +50,12 @@ public class ActionsController {
 	public void SendOnEndGame() {
 		if(onEndGame != null) {
 			onEndGame();
+		}
+	}
+
+	public void SendOnHitFinish() {
+		if(onHitFinish != null) {
+			onHitFinish();
 		}
 	}
 

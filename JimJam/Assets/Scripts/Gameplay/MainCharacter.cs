@@ -71,6 +71,8 @@ public class MainCharacter : MonoBehaviour {
 		if (collision.CompareTag("Lever")) {
 			collision.gameObject.GetComponent<Lever>().ShowInteractTip();
 			canInteract = true;
+		} else if(collision.CompareTag("Finish")) {
+			ActionsController.Instance.SendOnHitFinish();
 		}
 	}
 
