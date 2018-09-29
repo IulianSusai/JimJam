@@ -44,9 +44,9 @@ public class PlayerController : MonoBehaviour {
 			if (Input.GetKeyDown(KeyCode.W)) {
 				character.Jump();
 			}
-			if (Input.GetKeyDown(KeyCode.A)) {
+			if (Input.GetKey(KeyCode.A)) {
 				character.MoveLeft();
-			} else if (Input.GetKeyDown(KeyCode.D)) {
+			} else if (Input.GetKey(KeyCode.D)) {
 				character.MoveRight();
 			} else if (Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D)) {
 				character.StopMovement();
