@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour {
 			Destroy(gameObject);
 		}
 	}
-
+	[SerializeField] private ParticleSystem ps;
 	[SerializeField] private Vector3 startPosition;
 	[SerializeField] private Vector3 resetPosition;
 	[SerializeField] private MainCharacter character;
@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour {
 		ActionsController.Instance.onEndGame += EndGame;
 		ActionsController.Instance.onHitFinish += OnHitFinish;
 		ActionsController.Instance.onCanKill += OnCanKill;
+		ActionsController.Instance.onPlayerDeath += OnPlayerDeath;
 	}
 
 	private void StartGame() {
@@ -43,6 +44,19 @@ public class PlayerController : MonoBehaviour {
 	private void OnCanKill(bool cK) {
 		canKill = cK;
 		Debug.Log(canKill);
+	}
+
+	private void OnPlayerDeath() {
+		ps.gameObject.SetActive(true);
+		ps.gameObject.transform.position = character.transform.position;
+		didKill = false;
+		character.StopMovement();
+		character.transform.position = startPosition;
+		Invoke("ResetChPos", 1f);
+	}
+
+	private void ResetChPos() {
+		ps.gameObject.SetActive(false);
 	}
 
 	private void Update() {
@@ -82,6 +96,7 @@ public class PlayerController : MonoBehaviour {
 		if (canKill && !didKill && character.canInteract ) {
 			didKill = true;
 			ActionsController.Instance.SendOnDidKill();
+			ActionsController.Instance.SendOnPlayLeverAnim();
 		}
 	}
 

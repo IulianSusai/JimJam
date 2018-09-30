@@ -35,7 +35,7 @@ public class MainCharacter : MonoBehaviour {
 	}
 
 	public void StopJump() {
-		rb.velocity = new Vector2(rb.velocity.x, 0f);
+		rb.velocity = new Vector2(0f, 0f);
 		isJumping = false;
 	}
 
@@ -73,7 +73,10 @@ public class MainCharacter : MonoBehaviour {
 			canInteract = true;
 		} else if(collision.CompareTag("Finish")) {
 			ActionsController.Instance.SendOnHitFinish();
+		} else if (collision.CompareTag("Obstacle")) {
+			ActionsController.Instance.SendOnPlayerDeath();
 		}
+
 	}
 
 	private void OnTriggerExit2D(Collider2D collision) {

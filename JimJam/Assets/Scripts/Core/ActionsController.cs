@@ -24,7 +24,21 @@ public class ActionsController {
 	public Action onHitFinish;
 	public Action onResetGirl;
 	public Action onDidKill;
+	public Action onPlayerDeath;
+	public Action onPlayLeverAnim;
 	public Action<bool> onCanKill;
+
+	public void SendOnPlayLeverAnim() {
+		if(onPlayLeverAnim != null) {
+			onPlayLeverAnim();
+		}
+	}
+
+	public void SendOnPlayerDeath() {
+		if (onPlayerDeath != null) {
+			onPlayerDeath();
+		}
+	}
 
 	public void SendOnDidKill() {
 		if(onDidKill != null) {

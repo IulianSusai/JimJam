@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class GirlCharacter : MonoBehaviour {
 
+	[SerializeField] private SpriteRenderer rend;
 	[SerializeField] private Vector2 startPosition;
+	[SerializeField] private ParticleSystem diePs;
 
 	private void Start() {
 		ActionsController.Instance.onStartGame += OnStartGame;
@@ -14,6 +16,8 @@ public class GirlCharacter : MonoBehaviour {
 
 	private void OnStartGame() {
 		transform.localPosition = startPosition;
+		rend.enabled = true;
+		diePs.gameObject.SetActive(false);
 	}
 	
 	private void OnDidKill() {
@@ -28,12 +32,22 @@ public class GirlCharacter : MonoBehaviour {
 		if (collision.CompareTag("Obstacle")) {
 			ActionsController.Instance.SendOnResetGirl();
 			if (!PlayerController.Instance.didKill) {
-				Invoke("ResetPosition", 1f);
+				ActionsController.Instance.SendOnPlayerDeath();
+				rend.enabled = false;
+				diePs.gameObject.SetActive(true);
+				diePs.Play();
+				Invoke("ResetPosition", 3f);
+			} else {
+				rend.enabled = false;
+				diePs.gameObject.SetActive(true);
+				diePs.Play();
 			}
 		}
 	}
 
 	private void ResetPosition() {
+		rend.enabled = true;
+		diePs.gameObject.SetActive(false);
 		transform.localPosition = startPosition;
 	}
 

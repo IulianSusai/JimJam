@@ -69,6 +69,7 @@ public class Moon : MonoBehaviour {
 				Invoke("StartOffEclipse", eclipseWaitTime);
 			} else {
 				ActionsController.Instance.SendOnCanKill(false);
+				ActionsController.Instance.SendOnPlayLeverAnim();
 				Invoke("StartOnEclipse", nextEclipseWaitTime);
 			}
 		}
